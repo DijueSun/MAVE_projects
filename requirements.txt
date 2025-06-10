@@ -1,8 +1,7 @@
-import pandas as pd
-import numpy as np
-import shap
-import matplotlib.pyplot as plt
-import seaborn as sns
-import streamlit as st
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
+streamlit>=1.20.0
+pandas>=1.5.0
+numpy>=1.24.0
+shap>=0.42.1
+matplotlib>=3.6.0
+seaborn>=0.12.0
+scikit-learn>=1.2.0
