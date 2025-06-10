@@ -8,7 +8,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
 # ── 1. Load dataset ──
-path = "/Users/ds39/PycharmProjects/MAVE_Project/Streamlit_app/AllPlasmidsQCResults.csv"
+path = "AllPlasmidsQCResults.csv"
 df = pd.read_csv(path)
 
 # ── 2. Preprocessing ──
