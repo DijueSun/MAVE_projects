@@ -1,0 +1,7 @@
+Scenario,Split,Mean Acc,Std Acc
+target_only,Leave-one-gRNA-out,1.0,0.0
+target_only,Leave-one-target-region-out,0.8912106135986733,0.17219521262840534
+gRNA_only,Leave-one-gRNA-out,1.0,0.0
+gRNA_only,Leave-one-target-region-out,0.8912106135986733,0.17219521262840534
+combined,Leave-one-gRNA-out,1.0,0.0
+combined,Leave-one-target-region-out,0.8912106135986733,0.17219521262840534

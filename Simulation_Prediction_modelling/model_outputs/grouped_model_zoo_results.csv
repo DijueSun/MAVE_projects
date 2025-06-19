@@ -1,0 +1,16 @@
+Split,Model,MeanAcc,StdAcc
+Leave-one-gRNA-out,KNN (k=5),0.532710889994472,0.30690510535146864
+Leave-one-gRNA-out,SVM (RBF),0.8817037037037038,0.11332694244871191
+Leave-one-gRNA-out,Random Forest,0.3088888888888889,0.3511829118646491
+Leave-one-gRNA-out,Gradient Boosting,0.2685185185185185,0.3777959327518507
+Leave-one-gRNA-out,Logistic Regression,1.0,0.0
+Leave-one-primer-out,KNN (k=5),1.0,0.0
+Leave-one-primer-out,SVM (RBF),0.984512921532761,0.008852214833770397
+Leave-one-primer-out,Random Forest,1.0,0.0
+Leave-one-primer-out,Gradient Boosting,1.0,0.0
+Leave-one-primer-out,Logistic Regression,1.0,0.0
+Leave-one-target-region,KNN (k=5),0.5665859590934217,0.1752870055537855
+Leave-one-target-region,SVM (RBF),0.8965185185185185,0.09190667420099921
+Leave-one-target-region,Random Forest,0.26919181868435604,0.21330807082573683
+Leave-one-target-region,Gradient Boosting,0.5635997788833611,0.24158651575303
+Leave-one-target-region,Logistic Regression,0.8912106135986733,0.17219521262840534

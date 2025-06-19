@@ -1,0 +1,3 @@
+Split,Mean Acc,Std Acc
+Leave-one-gRNA-out,1.0,0.0
+Leave-one-target-out,0.8912106135986733,0.17219521262840534
