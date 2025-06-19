@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35916ccb-4f4e-4c13-87db-bd16c61abcb1" name="Changes" comment="Add simulation‐prediction sub‐app + reqs&#10;Update Streamlit apps and add cleaned plasmid data CSV&#10;Add Streamlit simulation-prediction sub-app" />
+    <list default="true" id="35916ccb-4f4e-4c13-87db-bd16c61abcb1" name="Changes" comment="Add simulation‐prediction sub‐app + reqs&#10;Update Streamlit apps and add cleaned plasmid data CSV&#10;Add Streamlit simulation-prediction sub-app">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/embedding_correlations_by_known_feature.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/embedding_correlations_full.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/shap_summary_beeswarm_40pct.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/shap_top20_barplot_40pct.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_Average_Cell_Count.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_HDR_Qubit_ng_ul.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_Successful_Edited_Cells.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_Surviving_Cells.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_computed_gc_content.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_computed_tm_c.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_gRNA_Qubit_ng_ul.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_pct_Surviving_Cells.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling/top10_corr_primer_score.csv" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,7 +135,7 @@
       <workItem from="1747316610783" duration="600000" />
       <workItem from="1750260673779" duration="661000" />
       <workItem from="1750261343184" duration="1113000" />
-      <workItem from="1750324312200" duration="4235000" />
+      <workItem from="1750324312200" duration="5259000" />
     </task>
     <task id="LOCAL-00001" summary="Add simulation‐prediction sub‐app + reqs&#10;Update Streamlit apps and add cleaned plasmid data CSV&#10;Add Streamlit simulation-prediction sub-app">
       <option name="closed" value="true" />
@@ -154,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750328707243</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add simulation‐prediction sub‐app + reqs&#10;Update Streamlit apps and add cleaned plasmid data CSV&#10;Add Streamlit simulation-prediction sub-app">
+      <option name="closed" value="true" />
+      <created>1750331291215</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1750331291215</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
