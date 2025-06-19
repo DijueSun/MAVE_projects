@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35916ccb-4f4e-4c13-87db-bd16c61abcb1" name="Changes" comment="Add simulation‐prediction sub‐app + reqs&#10;Update Streamlit apps and add cleaned plasmid data CSV&#10;Add Streamlit simulation-prediction sub-app">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.devcontainer/devcontainer.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AllPlasmidsQCResults.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Concentration_interactive_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlasmidsVsMapping_modelling.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Simulation_Prediction_modelling" beforeDir="false" afterPath="$PROJECT_DIR$/Simulation_Prediction_modelling" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Streamlit_app/PlasmidsVsMapping_modelling.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Updated_CellCounts_masterfiles.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/final_combined_plasmid_data_cleaned.csv" beforeDir="false" afterPath="$PROJECT_DIR$/final_combined_plasmid_data_cleaned.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +119,7 @@
       <workItem from="1747316610783" duration="600000" />
       <workItem from="1750260673779" duration="661000" />
       <workItem from="1750261343184" duration="1113000" />
-      <workItem from="1750324312200" duration="2281000" />
+      <workItem from="1750324312200" duration="2925000" />
     </task>
     <task id="LOCAL-00001" summary="Add simulation‐prediction sub‐app + reqs&#10;Update Streamlit apps and add cleaned plasmid data CSV&#10;Add Streamlit simulation-prediction sub-app">
       <option name="closed" value="true" />
@@ -139,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750262436353</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add simulation‐prediction sub‐app + reqs&#10;Update Streamlit apps and add cleaned plasmid data CSV&#10;Add Streamlit simulation-prediction sub-app">
+      <option name="closed" value="true" />
+      <created>1750328381246</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750328381246</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
