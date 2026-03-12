@@ -9,6 +9,7 @@ import streamlit as st
 
 
 ROOT = Path(__file__).resolve().parents[1]
+APP_DIR = Path(__file__).resolve().parent
 MODEL_DIR = ROOT / "Simulation_Prediction_modelling" / "26_feb_modelling"
 TRAINING_CSV = MODEL_DIR / "synthetic_training_data_constraints.csv"
 
@@ -19,6 +20,16 @@ import sge_model_skew_dna_mapping_v4 as mod  # noqa: E402
 
 LIBRARY_SIZE_MIN = 390
 LIBRARY_SIZE_MAX = 2500
+FIGURE_PATHS = {
+    "workflow_a": APP_DIR / "workflow_A_surrogate_build.png",
+    "workflow_b": APP_DIR / "workflow_B_slider_recommendation.png",
+    "hill": APP_DIR / "hill_function_example.png",
+    "hdr": APP_DIR / "hdr_rate_components.png",
+    "precise_hdr": APP_DIR / "precise_hdr_event_equations.png",
+    "monte_carlo": APP_DIR / "monte_carlo_model_example.png",
+    "parameter_flow": APP_DIR / "parameter_flow_diagram.png",
+    "sampling": APP_DIR / "sampling_variability_example.png",
+}
 
 
 @st.cache_data(show_spinner=False)
@@ -52,6 +63,13 @@ def load_training_rows() -> list[dict]:
 def fit_surrogates():
     rows = load_training_rows()
     return mod.fit_surrogate_models(rows)
+
+
+def show_figure(path: Path, caption: str) -> None:
+    if path.exists():
+        st.image(str(path), caption=caption, use_column_width=True)
+    else:
+        st.warning(f"Missing figure: {path.name}")
 
 
 @st.cache_data(show_spinner=False)
@@ -314,3 +332,33 @@ st.dataframe(
     ].head(20),
     use_container_width=True,
 )
+
+with st.expander("How The Model Works"):
+    tab_workflow, tab_hdr, tab_sampling, tab_events = st.tabs(
+        ["Workflow", "HDR Model", "Sampling", "Precise HDR"]
+    )
+
+    with tab_workflow:
+        col_a, col_b = st.columns(2)
+        with col_a:
+            show_figure(FIGURE_PATHS["workflow_a"], "Workflow A: build the surrogate model")
+        with col_b:
+            show_figure(FIGURE_PATHS["workflow_b"], "Workflow B: use the slider tool to rank experiments")
+
+    with tab_hdr:
+        col_a, col_b = st.columns(2)
+        with col_a:
+            show_figure(FIGURE_PATHS["hill"], "Hill functions used for HDR donor and sgRNA dose-response")
+        with col_b:
+            show_figure(FIGURE_PATHS["hdr"], "How the final HDR rate is built from Hill and ratio terms")
+
+    with tab_sampling:
+        col_a, col_b = st.columns(2)
+        with col_a:
+            show_figure(FIGURE_PATHS["parameter_flow"], "Which parameters feed the HDR equation, simulator, and outputs")
+            show_figure(FIGURE_PATHS["monte_carlo"], "Monte Carlo verification for one example candidate")
+        with col_b:
+            show_figure(FIGURE_PATHS["sampling"], "Beta, lognormal, multinomial, and binomial variability examples")
+
+    with tab_events:
+        show_figure(FIGURE_PATHS["precise_hdr"], "Precise HDR event equations used by the calculator")
