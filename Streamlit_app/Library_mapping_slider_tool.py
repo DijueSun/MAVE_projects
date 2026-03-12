@@ -234,8 +234,19 @@ required_total_cells_at_tx_display = (
 )
 
 col1, col2, col3, col4 = st.columns(4)
-col1.metric("Predicted HDR rate", f"{100.0 * float(best['hdr_rate_pred']):.1f}%")
-col2.metric("Verified mapping", f"{100.0 * float(best['mapping_rate_mean']):.1f}%")
+col1.metric(
+    "Predicted HDR rate",
+    f"{100.0 * float(best['hdr_rate_pred']):.1f}%",
+    help=(
+        "Model equation: h_hat = r_min + (r_max - r_min) * Hill(HDR_ng) * Hill(sgRNA_ng) * Gaussian(HDR_ng/sgRNA_ng). "
+        "This is the predicted HDR fraction among effectively transfected cells before Monte Carlo verification."
+    ),
+)
+col2.metric(
+    "Verified mapping",
+    f"{100.0 * float(best['mapping_rate_mean']):.1f}%",
+    help="Mean mapping rate after Monte Carlo verification. This controls the fraction of total sequencing reads that become usable reads.",
+)
 col3.metric(
     "Verified dropout",
     f"{100.0 * float(best['dropout_sim_mean']):.2f}%",
@@ -248,10 +259,38 @@ col4.metric(
 )
 
 col5, col6, col7, col8 = st.columns(4)
-col5.metric("Pred precise HDR in tx cells", f"{100.0 * precise_hdr_fraction_tx:.1f}%")
-col6.metric("Pred precise HDR in population", f"{100.0 * precise_hdr_fraction_pop:.1f}%")
-col7.metric("Pred precise HDR events", f"{pred_precise_events_tx:,.0f}")
-col8.metric("Cells needed for target events", required_total_cells_at_tx_display)
+col5.metric(
+    "Pred precise HDR in tx cells",
+    f"{100.0 * precise_hdr_fraction_tx:.1f}%",
+    help=(
+        "Calculated as predicted_HDR_rate * precise_HDR_among_HDR_edits. "
+        "This is the expected precise HDR fraction within effectively transfected cells."
+    ),
+)
+col6.metric(
+    "Pred precise HDR in population",
+    f"{100.0 * precise_hdr_fraction_pop:.1f}%",
+    help=(
+        "Calculated as predicted_HDR_rate * transfection_efficiency * precise_HDR_among_HDR_edits. "
+        "This is the expected precise HDR fraction across the full cell population."
+    ),
+)
+col7.metric(
+    "Pred precise HDR events",
+    f"{pred_precise_events_tx:,.0f}",
+    help=(
+        "Expected precise HDR events in haploid cells. "
+        "Calculated as effective_transfected_cells * precise_HDR_fraction_in_transfected_cells."
+    ),
+)
+col8.metric(
+    "Cells needed for target events",
+    required_total_cells_at_tx_display,
+    help=(
+        "Estimated total cells required to reach the target number of precise HDR events. "
+        "Calculated as target_precise_HDR_events / precise_HDR_fraction_in_population."
+    ),
+)
 
 st.subheader("Recommended Experiment Settings")
 st.write(
