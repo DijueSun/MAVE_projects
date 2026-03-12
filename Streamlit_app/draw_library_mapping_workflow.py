@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 
 
-def draw_box(ax, x: float, y: float, w: float, h: float, text: str, color: str, fs: float = 10) -> None:
+def draw_box(ax, x: float, y: float, w: float, h: float, text: str, color: str, fs: float = 14) -> None:
     rect = FancyBboxPatch(
         (x, y),
         w,
@@ -19,7 +19,7 @@ def draw_box(ax, x: float, y: float, w: float, h: float, text: str, color: str, 
         lw=1.2,
     )
     ax.add_patch(rect)
-    wrapped = textwrap.fill(text, width=52)
+    wrapped = textwrap.fill(text, width=32)
     ax.text(
         x + w / 2.0,
         y + h / 2.0,
@@ -27,6 +27,7 @@ def draw_box(ax, x: float, y: float, w: float, h: float, text: str, color: str, 
         ha="center",
         va="center",
         fontsize=fs,
+        linespacing=1.1,
         wrap=True,
         clip_on=True,
     )
@@ -53,24 +54,24 @@ def draw_vertical_flow(ax, x: float, upper_y: float, lower_y: float, box_h: floa
 
 
 def build_vertical_page(title: str, steps: list[tuple[str, str]], colors: list[str], footer: str) -> plt.Figure:
-    fig, ax = plt.subplots(figsize=(8.5, 12.5))
+    fig, ax = plt.subplots(figsize=(8.5, 13.0))
     ax.axis("off")
-    ax.text(0.5, 0.96, title, ha="center", va="top", fontsize=16, weight="bold", transform=ax.transAxes)
+    ax.text(0.5, 0.985, title, ha="center", va="top", fontsize=18, weight="bold", transform=ax.transAxes)
 
-    x = 0.14
-    w = 0.72
-    h = 0.085
-    gap = 0.11
-    y = 0.84
+    x = 0.12
+    w = 0.76
+    h = 0.082
+    gap = 0.075
+    y = 0.82
 
     for i, ((step_id, sentence), color) in enumerate(zip(steps, colors)):
-        draw_box(ax, x, y, w, h, f"{step_id}. {sentence}", color, fs=10.5)
+        draw_box(ax, x, y, w, h, f"{step_id}. {sentence}", color, fs=15)
         if i < len(steps) - 1:
             next_y = y - (h + gap)
             draw_vertical_flow(ax, x + w / 2, y, next_y, h, lw=1.8)
             y = next_y
 
-    ax.text(0.5, 0.06, footer, ha="center", va="center", fontsize=10, style="italic", transform=ax.transAxes)
+    ax.text(0.5, 0.06, footer, ha="center", va="center", fontsize=11, style="italic", transform=ax.transAxes)
 
     ax.set_xlim(0.0, 1.0)
     ax.set_ylim(0.0, 1.0)
@@ -96,10 +97,10 @@ def main() -> None:
 
     colors_a = ["#DDEBF7", "#E2F0D9", "#E2F0D9", "#D9EAD3"]
     steps_a = [
-        ("1", "Define the experimental ranges used to generate synthetic training designs."),
-        ("2", "Simulate each design with the mechanistic HDR, mapping, and library-skew model."),
-        ("3", "Average repeated stochastic runs to estimate HDR, dropout, P10, and usable reads."),
-        ("4", "Train Ridge surrogate models so later screening is fast."),
+        ("1", "Set the HDR, sgRNA, mapping, and library-size ranges."),
+        ("2", "Simulate synthetic designs with the HDR, mapping, and skew model."),
+        ("3", "Average repeated runs to estimate HDR, dropout, and P10."),
+        ("4", "Fit fast Ridge surrogates for dropout and P10."),
     ]
     fig_a = build_vertical_page(
         "Workflow A: Build the Surrogate Model",
@@ -110,11 +111,11 @@ def main() -> None:
 
     colors_b = ["#FFF2CC", "#FCE4D6", "#FCE4D6", "#E4DFEC", "#D9EAD3"]
     steps_b = [
-        ("1", "User sliders define the target output and the experimental input values."),
-        ("2", "The app samples candidate designs across the allowed library-size range."),
-        ("3", "The surrogate models filter candidates using dropout and P10 thresholds."),
-        ("4", "Monte Carlo reruns verify the top candidates with stochastic simulation."),
-        ("5", "Verified results are ranked and shown as recommended experiments."),
+        ("1", "Set the target and experiment inputs with sliders."),
+        ("2", "Sample candidate designs across the allowed ranges."),
+        ("3", "Filter candidates with surrogate dropout and P10 predictions."),
+        ("4", "Verify the top candidates with Monte Carlo reruns."),
+        ("5", "Rank verified designs and report the best settings."),
     ]
     fig_b = build_vertical_page(
         "Workflow B: Use the Slider Tool to Rank Experiments",
