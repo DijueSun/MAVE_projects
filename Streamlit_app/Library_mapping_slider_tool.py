@@ -236,8 +236,16 @@ required_total_cells_at_tx_display = (
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Predicted HDR rate", f"{100.0 * float(best['hdr_rate_pred']):.1f}%")
 col2.metric("Verified mapping", f"{100.0 * float(best['mapping_rate_mean']):.1f}%")
-col3.metric("Verified dropout", f"{100.0 * float(best['dropout_sim_mean']):.2f}%")
-col4.metric("Verified P10 reads", f"{float(best['p10_reads_sim_mean']):.1f}")
+col3.metric(
+    "Verified dropout",
+    f"{100.0 * float(best['dropout_sim_mean']):.2f}%",
+    help="Fraction of library variants with zero reads after Monte Carlo verification. Lower is better.",
+)
+col4.metric(
+    "Verified P10 reads",
+    f"{float(best['p10_reads_sim_mean']):.1f}",
+    help="The 10th percentile of read depth across variants after Monte Carlo verification. Higher means better low-end coverage.",
+)
 
 col5, col6, col7, col8 = st.columns(4)
 col5.metric("Pred precise HDR in tx cells", f"{100.0 * precise_hdr_fraction_tx:.1f}%")
@@ -279,6 +287,10 @@ st.caption(
 )
 
 st.subheader("Top Verified Candidates")
+st.caption(
+    "These are the best candidate experiment settings after fast surrogate screening and Monte Carlo verification, "
+    "ranked by lowest verified dropout and then highest verified P10 reads."
+)
 display_cols = [
     "HDR_ng",
     "sgRNA_ng",
