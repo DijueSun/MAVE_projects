@@ -138,20 +138,79 @@ st.caption(
 
 with st.sidebar:
     st.subheader("Targets")
-    target_mapping_pct = st.slider("Target library mapping (%)", min_value=30, max_value=70, value=40, step=1)
-    mapping_window_pct = st.slider(
-        "Mapping tolerance window (± %)", min_value=0, max_value=15, value=3, step=1
+    target_mapping_pct = st.slider(
+        "Target library mapping (%)",
+        min_value=30,
+        max_value=70,
+        value=40,
+        step=1,
+        help="Desired fraction of reads that map to the library. The search keeps candidates near this target.",
     )
-    target_dropout_pct = st.slider("Max dropout target (%)", min_value=1, max_value=20, value=2, step=1)
-    min_p10_reads = st.slider("Min P10 reads", min_value=10, max_value=500, value=100, step=5)
+    mapping_window_pct = st.slider(
+        "Mapping tolerance window (± %)",
+        min_value=0,
+        max_value=15,
+        value=3,
+        step=1,
+        help="Allowed deviation around the target mapping rate during candidate screening.",
+    )
+    target_dropout_pct = st.slider(
+        "Max dropout target (%)",
+        min_value=1,
+        max_value=20,
+        value=2,
+        step=1,
+        help="Maximum acceptable fraction of variants with zero reads after verification.",
+    )
+    min_p10_reads = st.slider(
+        "Min P10 reads",
+        min_value=10,
+        max_value=500,
+        value=100,
+        step=5,
+        help="Minimum acceptable 10th-percentile read depth across variants.",
+    )
 
     st.subheader("Experiment Inputs")
-    hdr_ng = st.slider("HDR ng", min_value=100, max_value=2000, value=700, step=10)
-    sgrna_ng = st.slider("sgRNA ng", min_value=50, max_value=1500, value=350, step=10)
-    skew_sigma = st.slider("Skew sigma", min_value=0.10, max_value=1.50, value=0.50, step=0.05)
-    reads_total = st.slider("Reads total", min_value=1_000_000, max_value=10_000_000, value=3_000_000, step=100_000)
+    hdr_ng = st.slider(
+        "HDR ng",
+        min_value=100,
+        max_value=2000,
+        value=700,
+        step=10,
+        help="HDR donor DNA mass supplied to the model. This feeds the Hill dose-response term.",
+    )
+    sgrna_ng = st.slider(
+        "sgRNA ng",
+        min_value=50,
+        max_value=1500,
+        value=350,
+        step=10,
+        help="sgRNA DNA/RNP mass supplied to the model. This feeds the second Hill dose-response term.",
+    )
+    skew_sigma = st.slider(
+        "Skew sigma",
+        min_value=0.10,
+        max_value=1.50,
+        value=0.50,
+        step=0.05,
+        help="Controls lognormal library skew. Higher values mean a less even starting library.",
+    )
+    reads_total = st.slider(
+        "Reads total",
+        min_value=1_000_000,
+        max_value=10_000_000,
+        value=3_000_000,
+        step=100_000,
+        help="Total sequencing reads available before applying mapping-rate losses.",
+    )
     cells_transfected = st.slider(
-        "Effective transfected cells", min_value=1_000_000, max_value=12_000_000, value=5_600_000, step=100_000
+        "Effective transfected cells",
+        min_value=1_000_000,
+        max_value=12_000_000,
+        value=5_600_000,
+        step=100_000,
+        help="Cells effectively entering the editing model. This drives per-variant coverage and event counts.",
     )
     library_low, library_high = st.slider(
         "Library size range",
@@ -159,23 +218,69 @@ with st.sidebar:
         LIBRARY_SIZE_MAX,
         (LIBRARY_SIZE_MIN, LIBRARY_SIZE_MAX),
         step=10,
+        help="Allowed library-size range to search across. Verified candidates can land anywhere inside this interval.",
     )
 
     st.subheader("Precise HDR Event Calculator")
-    transfection_eff_pct = st.slider("Transfection efficiency (%)", min_value=1, max_value=100, value=60, step=1)
+    transfection_eff_pct = st.slider(
+        "Transfection efficiency (%)",
+        min_value=1,
+        max_value=100,
+        value=60,
+        step=1,
+        help="Fraction of total cells assumed to be transfected. Used only in the precise-HDR event calculator.",
+    )
     precise_hdr_given_hdr_pct = st.slider(
-        "Precise HDR among HDR edits (%)", min_value=1, max_value=100, value=100, step=1
+        "Precise HDR among HDR edits (%)",
+        min_value=1,
+        max_value=100,
+        value=100,
+        step=1,
+        help="Fraction of HDR edits assumed to be truly precise by your NGS definition.",
     )
     target_precise_hdr_events = st.slider(
-        "Target precise HDR events", min_value=1_000, max_value=5_000_000, value=100_000, step=1_000
+        "Target precise HDR events",
+        min_value=1_000,
+        max_value=5_000_000,
+        value=100_000,
+        step=1_000,
+        help="Target number of precise HDR events used to back-calculate required cells.",
     )
 
     with st.expander("Advanced Search Settings"):
         st.caption("These only affect how broadly the app searches. They are not biological inputs.")
-        n_candidates = st.slider("Candidate samples", min_value=2000, max_value=30000, value=10000, step=1000)
-        top_k_verify = st.slider("Top candidates to verify", min_value=10, max_value=100, value=40, step=5)
-        n_reps_verify = st.slider("Monte Carlo reps per verification", min_value=10, max_value=80, value=30, step=5)
-        seed = st.number_input("Random seed", min_value=0, max_value=1_000_000, value=42, step=1)
+        n_candidates = st.slider(
+            "Candidate samples",
+            min_value=2000,
+            max_value=30000,
+            value=10000,
+            step=1000,
+            help="Number of candidate designs screened by the surrogate models before verification.",
+        )
+        top_k_verify = st.slider(
+            "Top candidates to verify",
+            min_value=10,
+            max_value=100,
+            value=40,
+            step=5,
+            help="Number of best surrogate-ranked candidates rerun with the full Monte Carlo simulator.",
+        )
+        n_reps_verify = st.slider(
+            "Monte Carlo reps per verification",
+            min_value=10,
+            max_value=80,
+            value=30,
+            step=5,
+            help="Number of stochastic repeats used to estimate verified dropout, mapping, and P10.",
+        )
+        seed = st.number_input(
+            "Random seed",
+            min_value=0,
+            max_value=1_000_000,
+            value=42,
+            step=1,
+            help="Random seed for candidate generation and Monte Carlo reproducibility.",
+        )
 
 mapping_target = float(target_mapping_pct) / 100.0
 mapping_window = float(mapping_window_pct) / 100.0
@@ -291,30 +396,73 @@ col8.metric(
         "Calculated as target_precise_HDR_events / precise_HDR_fraction_in_population."
     ),
 )
+st.caption("Hover over metric labels, input labels, and table headers for definitions and equations.")
 
 st.subheader("Recommended Experiment Settings")
-st.write(
-    pd.DataFrame(
-        [
-            {
-                "HDR_ng": round(float(best["HDR_ng"]), 2),
-                "sgRNA_ng": round(float(best["sgRNA_ng"]), 2),
-                "skew_sigma": round(float(best["skew_sigma"]), 3),
-                "mapping_rate_assumed_%": round(100.0 * float(best["mapping_rate_assumed"]), 2),
-                "reads_total": int(best["reads_total"]),
-                "cells_transfected": int(best["cells_transfected"]),
-                "library_size": int(best["library_size"]),
-                "transfection_eff_%": round(100.0 * transfection_eff, 2),
-                "precise_hdr_given_hdr_%": round(100.0 * precise_hdr_given_hdr, 2),
-                "precise_hdr_fraction_tx_%": round(100.0 * precise_hdr_fraction_tx, 2),
-                "precise_hdr_fraction_population_%": round(100.0 * precise_hdr_fraction_pop, 2),
-                "pred_precise_hdr_events": round(pred_precise_events_tx, 0),
-                "required_effective_tx_cells": required_effective_tx_cells_display,
-                "required_total_cells_at_tx": required_total_cells_at_tx_display,
-            }
-        ]
-    )
+recommended_df = pd.DataFrame(
+    [
+        {
+            "HDR_ng": round(float(best["HDR_ng"]), 2),
+            "sgRNA_ng": round(float(best["sgRNA_ng"]), 2),
+            "skew_sigma": round(float(best["skew_sigma"]), 3),
+            "mapping_rate_assumed_%": round(100.0 * float(best["mapping_rate_assumed"]), 2),
+            "reads_total": int(best["reads_total"]),
+            "cells_transfected": int(best["cells_transfected"]),
+            "library_size": int(best["library_size"]),
+            "transfection_eff_%": round(100.0 * transfection_eff, 2),
+            "precise_hdr_given_hdr_%": round(100.0 * precise_hdr_given_hdr, 2),
+            "precise_hdr_fraction_tx_%": round(100.0 * precise_hdr_fraction_tx, 2),
+            "precise_hdr_fraction_population_%": round(100.0 * precise_hdr_fraction_pop, 2),
+            "pred_precise_hdr_events": round(pred_precise_events_tx, 0),
+            "required_effective_tx_cells": required_effective_tx_cells_display,
+            "required_total_cells_at_tx": required_total_cells_at_tx_display,
+        }
+    ]
 )
+recommended_config = {
+    "HDR_ng": st.column_config.NumberColumn("HDR_ng", help="HDR donor amount used in the recommendation."),
+    "sgRNA_ng": st.column_config.NumberColumn("sgRNA_ng", help="sgRNA amount used in the recommendation."),
+    "skew_sigma": st.column_config.NumberColumn("skew_sigma", help="Lognormal skew parameter for starting library unevenness."),
+    "mapping_rate_assumed_%": st.column_config.NumberColumn(
+        "mapping_rate_assumed_%",
+        help="Mapping-rate assumption sampled for this candidate before verification.",
+    ),
+    "reads_total": st.column_config.NumberColumn("reads_total", help="Total sequencing reads before mapping loss."),
+    "cells_transfected": st.column_config.NumberColumn(
+        "cells_transfected",
+        help="Effective transfected cells used inside the stochastic simulator.",
+    ),
+    "library_size": st.column_config.NumberColumn("library_size", help="Number of variants in the library for this candidate."),
+    "transfection_eff_%": st.column_config.NumberColumn(
+        "transfection_eff_%",
+        help="Population-level transfection efficiency used only for the precise-HDR event calculator.",
+    ),
+    "precise_hdr_given_hdr_%": st.column_config.NumberColumn(
+        "precise_hdr_given_hdr_%",
+        help="Assumed fraction of HDR edits that are truly precise.",
+    ),
+    "precise_hdr_fraction_tx_%": st.column_config.NumberColumn(
+        "precise_hdr_fraction_tx_%",
+        help="Predicted precise HDR fraction inside effectively transfected cells.",
+    ),
+    "precise_hdr_fraction_population_%": st.column_config.NumberColumn(
+        "precise_hdr_fraction_population_%",
+        help="Predicted precise HDR fraction across the full cell population.",
+    ),
+    "pred_precise_hdr_events": st.column_config.NumberColumn(
+        "pred_precise_hdr_events",
+        help="Expected precise HDR events in haploid cells for this recommendation.",
+    ),
+    "required_effective_tx_cells": st.column_config.TextColumn(
+        "required_effective_tx_cells",
+        help="Effective transfected cells needed to reach the target precise HDR event count.",
+    ),
+    "required_total_cells_at_tx": st.column_config.TextColumn(
+        "required_total_cells_at_tx",
+        help="Total cells needed to reach the target precise HDR event count after accounting for transfection efficiency.",
+    ),
+}
+st.dataframe(recommended_df, use_container_width=True, column_config=recommended_config, hide_index=True)
 
 st.caption(
     "Experiment sliders rerun the model immediately. The advanced search settings only control how many "
@@ -382,6 +530,57 @@ st.dataframe(
         ]
     ].head(20),
     use_container_width=True,
+    column_config={
+        "HDR_ng": st.column_config.NumberColumn("HDR_ng", help="HDR donor amount for the verified candidate."),
+        "sgRNA_ng": st.column_config.NumberColumn("sgRNA_ng", help="sgRNA amount for the verified candidate."),
+        "skew_sigma": st.column_config.NumberColumn("skew_sigma", help="Lognormal skew parameter used for this candidate."),
+        "hdr_rate_pred_%": st.column_config.NumberColumn(
+            "hdr_rate_pred_%",
+            help=(
+                "Predicted HDR rate before verification. "
+                "Equation: h_hat = r_min + (r_max - r_min) * Hill(HDR_ng) * Hill(sgRNA_ng) * Gaussian(HDR_ng/sgRNA_ng)."
+            ),
+        ),
+        "mapping_rate_assumed_%": st.column_config.NumberColumn(
+            "mapping_rate_assumed_%",
+            help="Mapping-rate assumption sampled for the candidate before Monte Carlo verification.",
+        ),
+        "reads_total": st.column_config.NumberColumn("reads_total", help="Total sequencing reads before mapping loss."),
+        "cells_transfected": st.column_config.NumberColumn(
+            "cells_transfected",
+            help="Effective transfected cells used in the simulator for this candidate.",
+        ),
+        "library_size": st.column_config.NumberColumn("library_size", help="Number of variants in the library."),
+        "dropout_sim_mean_%": st.column_config.NumberColumn(
+            "dropout_sim_mean_%",
+            help="Verified fraction of variants with zero reads after Monte Carlo simulation.",
+        ),
+        "p10_reads_sim_mean": st.column_config.NumberColumn(
+            "p10_reads_sim_mean",
+            help="Verified 10th-percentile read depth across variants after Monte Carlo simulation.",
+        ),
+        "mapping_rate_mean_%": st.column_config.NumberColumn(
+            "mapping_rate_mean_%",
+            help="Verified mean mapping rate across Monte Carlo repeats.",
+        ),
+        "reads_usable_mean": st.column_config.NumberColumn(
+            "reads_usable_mean",
+            help="Verified mean number of usable reads after mapping-rate losses.",
+        ),
+        "precise_hdr_fraction_tx_%": st.column_config.NumberColumn(
+            "precise_hdr_fraction_tx_%",
+            help="Predicted precise HDR fraction within effectively transfected cells.",
+        ),
+        "precise_hdr_fraction_population_%": st.column_config.NumberColumn(
+            "precise_hdr_fraction_population_%",
+            help="Predicted precise HDR fraction across the full cell population.",
+        ),
+        "pred_precise_hdr_events": st.column_config.NumberColumn(
+            "pred_precise_hdr_events",
+            help="Expected precise HDR events in haploid cells for this verified candidate.",
+        ),
+    },
+    hide_index=True,
 )
 
 with st.expander("How The Model Works"):
